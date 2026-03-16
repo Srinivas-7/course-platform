@@ -6,7 +6,7 @@ const HeroPage = lazy(() => import("./pages/HeroPage"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Login = lazy(() => import("./pages/Login"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
-const MyCourses = lazy(() => import("./pages/mycourses"));
+const MyCourses = lazy(() => import("./pages/MyCourses"));
 const About = lazy(() => import("./pages/About"));
 const Register = lazy(() => import("./pages/Register"));
 const ResetPassword = lazy(() => import ("./pages/ResetPassword"));
