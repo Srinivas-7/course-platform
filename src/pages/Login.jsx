@@ -10,14 +10,13 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [resetLoading, setResetLoading] = useState(false); // ← added
+  const [resetLoading, setResetLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
       alert("Please enter email and password");
       return;
     }
-    
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -42,15 +41,14 @@ export default function Login() {
   };
 
   const handleForgotPassword = async () => {
-    if (!email) {
-      alert("Please enter your email address first");
-      return;
-    }
+    const resetEmail = prompt("Enter your email address to reset your password:");
+
+    if (!resetEmail) return;
 
     setResetLoading(true);
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "http://localhost:5173/reset-password",
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+      redirectTo: "https://course-platforms.vercel.app/reset-password", // ✅ updated
     });
 
     setResetLoading(false);
@@ -66,7 +64,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:5173/dashboard",
+        redirectTo: "https://course-platforms.vercel.app/dashboard", // ✅ updated
       },
     });
 
@@ -123,7 +121,6 @@ export default function Login() {
               Remember me
             </label>
 
-            {/* ✅ Forgot password button with loading state */}
             <button
               type="button"
               onClick={handleForgotPassword}

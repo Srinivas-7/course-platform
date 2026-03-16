@@ -36,9 +36,7 @@ export default function Register() {
 
       const user = data.user;
 
-      // Insert into profiles table
       if (user) {
-        // ✅ Fixed code
         const { error: profileError } = await supabase.from("profiles").upsert({
           id: user.id,
           email: user.email,
@@ -65,7 +63,7 @@ export default function Register() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:5173/dashboard",
+        redirectTo: "https://course-platforms.vercel.app/dashboard", // ✅ updated
       },
     });
 
@@ -93,12 +91,10 @@ export default function Register() {
             handleRegister();
           }}
         >
-
           <div>
             <label className="block text-sm text-gray-700 mb-2">
               Email address
             </label>
-
             <input
               type="email"
               value={email}
@@ -111,7 +107,6 @@ export default function Register() {
             <label className="block text-sm text-gray-700 mb-2">
               Password
             </label>
-
             <input
               type="password"
               value={password}
@@ -137,7 +132,6 @@ export default function Register() {
               Sign in
             </Link>
           </p>
-
         </form>
 
         <div className="mt-8 flex items-center gap-4 text-gray-400 text-sm">
@@ -147,7 +141,6 @@ export default function Register() {
         </div>
 
         <div className="mt-6 flex justify-center">
-
           <button
             onClick={handleGoogleLogin}
             className="cursor-pointer flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-md py-2 px-6 text-white"
@@ -155,7 +148,6 @@ export default function Register() {
             <FcGoogle size={20} />
             Continue with Google
           </button>
-
         </div>
 
       </div>
