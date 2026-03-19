@@ -14,7 +14,7 @@ export default function Footer() {
 
                 {/* RIGHT ICONS */}
                 <div className="flex items-center gap-6 text-gray-300 text-lg">
-                    <a href="" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.facebook.com/profile.php?id=61559616802643" target="_blank" rel="noopener noreferrer">
                         <FaFacebookF className="cursor-pointer hover:text-white transition" />
                     </a>
                     <a href="https://www.instagram.com/vijayanagara_edits?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">

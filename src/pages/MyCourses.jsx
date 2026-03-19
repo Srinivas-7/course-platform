@@ -45,7 +45,7 @@ export default function MyCourses() {
       <Navbar />
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 pt-38 pb-20 space-y-28">
+      <main className="flex-1 pt-45 pb-20 space-y-28">
 
         {courses.map((course, index) => (
 

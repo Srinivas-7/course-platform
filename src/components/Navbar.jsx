@@ -1,16 +1,37 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { supabase } from "../lib/supabase";
 
-const navigation = [
-  { name: "Home", href: "/" },
+const publicNavigation = [
+  { name: "About Us", href: "/about" },
+];
+
+const privateNavigation = [
   { name: "My Courses", href: "/mycourses" },
   { name: "About Us", href: "/about" },
 ];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
+
+  const getInitials = () => {
+    if (!user) return "?";
+    const name = user.user_metadata?.full_name || "";
+    if (name) return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+    return user.email[0].toUpperCase();
+  };
 
   return (
     <header className="fixed top-4 inset-x-0 z-50 flex justify-center">
@@ -20,10 +41,10 @@ export default function Navbar() {
 
           {/* LEFT LOGO */}
           <div className="flex lg:flex-1">
-            <Link to="/" className="text-xl font-bold text-white">
+            <Link to={user ? "/dashboard" : "/"} className="text-xl font-bold text-white">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                fill="#ffffff" viewBox="0 0 24 24" >
-                <path d="M5 2h14v2H5zm14.1 3.8c-.38-.5-.97-.8-1.6-.8h-11c-.63 0-1.23.3-1.6.8L2.4 9.13c-.26.34-.4.77-.4 1.2V13c0 .55.45 1 1 1v7c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-7h6v8h2v-8c.55 0 1-.45 1-1v-2.67c0-.43-.14-.86-.4-1.2zM4 10.33 6.5 7h11l2.5 3.33V12H4zM11 20H5v-6h6z"></path>
+                fill="#ffffff" viewBox="0 0 24 24">
+                <path d="M5 2h14v2H5zm14.1 3.8c-.38-.5-.97-.8-1.6-.8h-11c-.63 0-1.23.3-1.6.8L2.4 9.13c-.26.34-.4.77-.4 1.2V13c0 .55.45 1 1 1v7c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-7h6v8h2v-8c.55 0 1-.45 1-1v-2.67c0-.43-.14-.86-.4-1.2zM4 10.33 6.5 7h11l2.5 3.33V12H4zM11 20H5v-6h6z" />
               </svg>
             </Link>
           </div>
@@ -40,7 +61,7 @@ export default function Navbar() {
 
           {/* DESKTOP MENU */}
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
+            {(user ? privateNavigation : publicNavigation).map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
@@ -51,15 +72,53 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* LOGIN */}
+          {/* RIGHT - Login or Profile */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link to="/login" className="text-sm font-semibold text-white">
-              Log in →
-            </Link>
+            {user ? (
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="focus:outline-none"
+                >
+                  {user?.user_metadata?.avatar_url ? (
+                    <img
+                      src={user.user_metadata.avatar_url}
+                      alt="Profile"
+                      className="w-10 h-10 rounded-full border-2 border-purple-500 object-cover cursor-pointer hover:border-purple-400 transition"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold border-2 border-purple-400 cursor-pointer hover:bg-purple-500 transition">
+                      {getInitials()}
+                    </div>
+                  )}
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-44 bg-gray-800 border border-gray-700 rounded-xl shadow-xl z-50 overflow-hidden">
+                    <button
+                      onClick={() => { setDropdownOpen(false); navigate("/profile"); }}
+                      className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-gray-700 transition flex items-center gap-2"
+                    >
+                      👤 View Profile
+                    </button>
+                    <div className="h-px bg-gray-700" />
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-gray-700 transition flex items-center gap-2"
+                    >
+                      🚪 Log out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link to="/login" className="text-sm font-semibold text-white">
+                Log in →
+              </Link>
+            )}
           </div>
 
         </nav>
-
       </div>
 
       {/* MOBILE MENU */}
@@ -76,7 +135,7 @@ export default function Navbar() {
           </div>
 
           <div className="mt-6 space-y-4">
-            {navigation.map((item) => (
+            {(user ? privateNavigation : publicNavigation).map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
@@ -87,13 +146,31 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link
-              to="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-white font-semibold"
-            >
-              Login
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block text-white font-semibold"
+                >
+                  View Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block text-red-400 font-semibold"
+                >
+                  Log out
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-white font-semibold"
+              >
+                Login
+              </Link>
+            )}
           </div>
 
         </DialogPanel>

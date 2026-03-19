@@ -5,32 +5,34 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
+import Footer from "../components/Footer";
 
 const tiers = [
   {
-    name: "Hobby",
-    price: "$29",
+    name: "CapCut",
+    price: "₹999",
     description:
-      "The perfect plan if you're just getting started with our product.",
+      "Perfect for beginners who want to start editing videos on mobile and grow their social media presence.",
     features: [
-      "25 products",
-      "Up to 10,000 subscribers",
-      "Advanced analytics",
-      "24-hour support response time",
+      "Complete CapCut course",
+      "Mobile video editing",
+      "Social media content creation",
+      "Transitions & effects",
+      "Lifetime access",
     ],
     featured: false,
   },
   {
-    name: "Enterprise",
-    price: "$99",
-    description: "Dedicated support and infrastructure for your company.",
+    name: "Premiere Pro",
+    price: "₹1,999",
+    description: "Professional desktop editing for creators who want to work with clients and earn freelancing income.",
     features: [
-      "Unlimited products",
-      "Unlimited subscribers",
-      "Advanced analytics",
+      "Complete Premiere Pro course",
+      "Professional desktop editing",
+      "Color grading & correction",
       "Dedicated support representative",
-      "Marketing automations",
-      "Custom integrations",
+      "Audio mixing & sync",
+      "Lifetime access",
     ],
     featured: true,
   },
@@ -55,7 +57,7 @@ export default function Pricing() {
     >
       <Navbar />
 
-      <div className="max-w-6xl mx-auto px-6 text-center">
+      <div className="max-w-6xl mx-auto px-6 pb-25 pt-6 text-center">
 
         {/* TITLE */}
         <div className="mb-16">
@@ -81,7 +83,7 @@ export default function Pricing() {
                 <span className="text-5xl font-bold text-white">
                   {tier.price}
                 </span>
-                <span className="text-gray-400">/month</span>
+                <span className="text-gray-400">/Lifetime</span>
               </div>
 
               <p className="text-gray-300 mt-6">{tier.description}</p>
@@ -99,17 +101,17 @@ export default function Pricing() {
                 className={`mt-8 w-full py-2 rounded-md font-semibold ${
                   tier.featured
                     ? "bg-indigo-500 hover:bg-indigo-400 text-white"
-                    : "bg-white/10 hover:bg-white/20 text-white"
+                    : "bg-black/40 hover:bg-white/20 text-white"
                 }`}
               >
-                Get started today
+                Purchase
               </button>
             </div>
           ))}
 
         </div>
-
       </div>
+<Footer/>
     </motion.div>
   );
 }
