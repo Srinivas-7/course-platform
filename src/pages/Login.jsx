@@ -36,19 +36,17 @@ export default function Login() {
       return;
     }
 
-    console.log("Logged in user:", data.user);
     navigate("/dashboard", { replace: true });
   };
 
   const handleForgotPassword = async () => {
     const resetEmail = prompt("Enter your email address to reset your password:");
-
     if (!resetEmail) return;
 
     setResetLoading(true);
 
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: "https://granita-acf12d.netlify.app/reset-password", // ✅ updated
+      redirectTo: "https://granita-acf12d.netlify.app/reset-password",
     });
 
     setResetLoading(false);
@@ -64,7 +62,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://granita-acf12d.netlify.app/dashboard", 
+        redirectTo: "https://granita-acf12d.netlify.app/dashboard",
       },
     });
 
@@ -83,7 +81,8 @@ export default function Login() {
         Sign in to your account
       </h2>
 
-      <div className="w-full max-w-md bg-black border border-white/50 backdrop-blur-md rounded-2xl p-8 shadow-xl">
+      {/* ✅ Dark card matching website theme */}
+      <div className="w-full max-w-md bg-gray-800 border border-gray-700 rounded-2xl p-8 shadow-xl">
         <form
           className="space-y-6"
           onSubmit={(e) => {
@@ -92,31 +91,31 @@ export default function Login() {
           }}
         >
           <div>
-            <label className="block text-sm text-gray-700 mb-2">
+            <label className="block text-sm text-gray-300 mb-2">
               Email address
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md bg-gray-50 border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-md bg-gray-700 border border-gray-600 px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-700 mb-2">
+            <label className="block text-sm text-gray-300 mb-2">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md bg-gray-50 border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-md bg-gray-700 border border-gray-600 px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
           <div className="flex items-center justify-between text-sm">
-            <label className="cursor-pointer flex items-center gap-2 text-gray-600">
+            <label className="cursor-pointer flex items-center gap-2 text-gray-400">
               <input type="checkbox" className="accent-purple-500" />
               Remember me
             </label>
@@ -149,16 +148,18 @@ export default function Login() {
           </p>
         </form>
 
-        <div className="mt-8 flex items-center gap-4 text-gray-400 text-sm">
+        {/* Divider */}
+        <div className="mt-8 flex items-center gap-4 text-gray-500 text-sm">
           <div className="flex-1 h-px bg-gray-700"></div>
           Or continue with
           <div className="flex-1 h-px bg-gray-700"></div>
         </div>
 
+        {/* ✅ Google button - dark theme */}
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleGoogleLogin}
-            className="cursor-pointer flex items-center justify-center gap-2 bg-gray-50 hover:bg-white/20 border border-white/10 rounded-md py-2 px-6 text-white"
+            className="cursor-pointer flex items-center justify-center gap-3 w-full bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded-md py-2 px-6 text-white font-medium transition"
           >
             <FcGoogle size={20} />
             Continue with Google
