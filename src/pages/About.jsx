@@ -15,7 +15,7 @@ export default function About() {
       <Navbar />
 
       {/* MAIN ABOUT SECTION */}
-      <div className="flex-grow flex items-center justify-center px-6">
+      <div className="flex-grow flex items-center justify-center px-6 pt-24">
         <div className="max-w-3xl text-center">
 
           <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-8">

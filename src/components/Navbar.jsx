@@ -21,13 +21,8 @@ export default function Navbar() {
           {/* LEFT LOGO */}
           <div className="flex lg:flex-1">
             <Link to="/" className="text-xl font-bold text-white">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="36"
-                height="36"
-                fill="#552386"
-                viewBox="0 0 24 24"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                fill="#ffffff" viewBox="0 0 24 24" >
                 <path d="M5 2h14v2H5zm14.1 3.8c-.38-.5-.97-.8-1.6-.8h-11c-.63 0-1.23.3-1.6.8L2.4 9.13c-.26.34-.4.77-.4 1.2V13c0 .55.45 1 1 1v7c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-7h6v8h2v-8c.55 0 1-.45 1-1v-2.67c0-.43-.14-.86-.4-1.2zM4 10.33 6.5 7h11l2.5 3.33V12H4zM11 20H5v-6h6z"></path>
               </svg>
             </Link>

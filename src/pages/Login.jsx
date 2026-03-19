@@ -48,7 +48,7 @@ export default function Login() {
     setResetLoading(true);
 
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: "https://course-platforms.vercel.app/reset-password", // ✅ updated
+      redirectTo: "https://granita-acf12d.netlify.app/reset-password", // ✅ updated
     });
 
     setResetLoading(false);
@@ -64,7 +64,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://course-platforms.vercel.app/dashboard", // ✅ updated
+        redirectTo: "https://granita-acf12d.netlify.app/dashboard", 
       },
     });
 
@@ -83,7 +83,7 @@ export default function Login() {
         Sign in to your account
       </h2>
 
-      <div className="w-full max-w-md bg-white border border-white/50 backdrop-blur-md rounded-2xl p-8 shadow-xl">
+      <div className="w-full max-w-md bg-black border border-white/50 backdrop-blur-md rounded-2xl p-8 shadow-xl">
         <form
           className="space-y-6"
           onSubmit={(e) => {
@@ -99,7 +99,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md bg-white border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-md bg-gray-50 border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -111,7 +111,7 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md bg-white border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-md bg-gray-50 border border-gray-300 px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -158,7 +158,7 @@ export default function Login() {
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleGoogleLogin}
-            className="cursor-pointer flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-md py-2 px-6 text-white"
+            className="cursor-pointer flex items-center justify-center gap-2 bg-gray-50 hover:bg-white/20 border border-white/10 rounded-md py-2 px-6 text-white"
           >
             <FcGoogle size={20} />
             Continue with Google
