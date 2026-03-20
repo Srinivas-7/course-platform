@@ -1,11 +1,10 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Footer from "../components/Footer";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const tiers = [
   {
@@ -38,14 +37,19 @@ const tiers = [
   },
 ];
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "My Courses", href: "/mycourses" },
-  { name: "About Us", href: "/about" },
-];
-
 export default function Pricing() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user } = useAuth(); // ✅ inside component
+  const navigate = useNavigate(); // ✅ inside component
+
+  const handlePurchase = (tier) => {
+    if (!user) {
+      localStorage.setItem("redirectAfterLogin", "/pricing");
+      navigate("/login");
+      return;
+    }
+    // Razorpay payment will go here
+    alert(`Proceeding to pay ${tier.price} for ${tier.name}`);
+  };
 
   return (
     <motion.div
@@ -69,7 +73,6 @@ export default function Pricing() {
 
         {/* CARDS */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl mx-auto">
-
           {tiers.map((tier) => (
             <div
               key={tier.name}
@@ -97,8 +100,10 @@ export default function Pricing() {
                 ))}
               </ul>
 
+              {/* ✅ onClick connected to handlePurchase */}
               <button
-                className={`mt-8 w-full py-2 rounded-md font-semibold ${
+                onClick={() => handlePurchase(tier)}
+                className={`cursor-pointer mt-8 w-full py-2 rounded-md font-semibold ${
                   tier.featured
                     ? "bg-indigo-500 hover:bg-indigo-400 text-white"
                     : "bg-black/40 hover:bg-white/20 text-white"
@@ -108,10 +113,10 @@ export default function Pricing() {
               </button>
             </div>
           ))}
-
         </div>
       </div>
-<Footer/>
+
+      <Footer />
     </motion.div>
   );
 }

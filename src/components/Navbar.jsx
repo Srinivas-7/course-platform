@@ -6,11 +6,13 @@ import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabase";
 
 const publicNavigation = [
+  { name: "Pricing", href: "/pricing" },
   { name: "About Us", href: "/about" },
 ];
 
 const privateNavigation = [
   { name: "My Courses", href: "/mycourses" },
+  { name: "Pricing", href: "/pricing" },
   { name: "About Us", href: "/about" },
 ];
 
@@ -97,16 +99,16 @@ export default function Navbar() {
                   <div className="absolute right-0 mt-2 w-44 bg-gray-800 border border-gray-700 rounded-xl shadow-xl z-50 overflow-hidden">
                     <button
                       onClick={() => { setDropdownOpen(false); navigate("/profile"); }}
-                      className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-gray-700 transition flex items-center gap-2"
+                      className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:cursor-pointer hover:bg-gray-700 transition flex items-center gap-2"
                     >
-                      👤 View Profile
+                      View Profile
                     </button>
                     <div className="h-px bg-gray-700" />
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-gray-700 transition flex items-center gap-2"
+                      className="w-full text-left px-4 py-3 text-sm text-red-400 font-bold hover:cursor-pointer hover:bg-gray-700 transition flex items-center gap-2"
                     >
-                      🚪 Log out
+                      Log out
                     </button>
                   </div>
                 )}

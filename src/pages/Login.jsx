@@ -36,7 +36,16 @@ export default function Login() {
       return;
     }
 
-    navigate("/dashboard", { replace: true });
+    const role = data.user?.user_metadata?.role;
+
+    if (role === "admin") {
+      navigate("/admin", { replace: true });
+      return;
+    }
+
+    const redirect = localStorage.getItem("redirectAfterLogin") || "/dashboard";
+    localStorage.removeItem("redirectAfterLogin");
+    navigate(redirect, { replace: true });
   };
 
   const handleForgotPassword = async () => {
@@ -62,7 +71,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://granita-acf12d.netlify.app/dashboard",
+        redirectTo: "https://granita-acf12d.netlify.app/auth/callback", // ✅ updated
       },
     });
 
@@ -81,7 +90,6 @@ export default function Login() {
         Sign in to your account
       </h2>
 
-      {/* ✅ Dark card matching website theme */}
       <div className="w-full max-w-md bg-gray-800 border border-gray-700 rounded-2xl p-8 shadow-xl">
         <form
           className="space-y-6"
@@ -148,14 +156,12 @@ export default function Login() {
           </p>
         </form>
 
-        {/* Divider */}
         <div className="mt-8 flex items-center gap-4 text-gray-500 text-sm">
           <div className="flex-1 h-px bg-gray-700"></div>
           Or continue with
           <div className="flex-1 h-px bg-gray-700"></div>
         </div>
 
-        {/* ✅ Google button - dark theme */}
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleGoogleLogin}

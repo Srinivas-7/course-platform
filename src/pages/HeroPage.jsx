@@ -1,18 +1,9 @@
-import { useState } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { motion } from "framer-motion";
 
-const navigation = [
-    { name: "Home", href: "/" },
-    { name: "My Courses", href: "/mycourses" },
-    { name: "About Us", href: "/about" },
-];
-
-export default function About() {
+export default function HeroPage() {
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -21,20 +12,15 @@ export default function About() {
             transition={{ duration: 0.4 }}
         >
             <div className="bg-gray-900">
-                {/* NAVBAR */}
                 <Navbar />
 
-                {/* HERO SECTION */}
                 <div className="relative isolate px-6 pt-24 lg:px-8">
 
-                    {/* TOP GRADIENT BLOB */}
                     <div
                         aria-hidden="true"
                         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                     >
-                        <div
-                            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36rem] -translate-x-1/2 rotate-30 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72rem]"
-                        />
+                        <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36rem] -translate-x-1/2 rotate-30 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72rem]" />
                     </div>
 
                     <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
@@ -61,28 +47,20 @@ export default function About() {
                         </div>
                     </div>
 
-                    {/* BOTTOM GRADIENT BLOB */}
-                    {/* BOTTOM GRADIENT AREA WITH FOOTER */}
                     <div
                         aria-hidden="true"
                         className="absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl"
                     >
-                        <div
-                            className="relative left-1/2 aspect-[1155/678] w-[72rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
-                        />
+                        <div className="relative left-1/2 aspect-[1155/678] w-[72rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30" />
                     </div>
 
-                    {/* FOOTER INSIDE GRADIENT */}
-
                 </div>
+
                 <div className="relative z-10">
                     <Footer />
                 </div>
 
-
             </div>
-
-            {/* page content */}
         </motion.div>
     );
 }
