@@ -11,7 +11,7 @@ const tiers = [
   {
     id: "capcut",
     name: "Mobile Editing",
-    price: "₹600",
+    price: "₹399",
     amount: 600,
     description:
       "Perfect for beginners who want to start editing videos on mobile and grow their social media presence.",
@@ -29,7 +29,7 @@ const tiers = [
   {
     id: "combo",
     name: "Mobile + Pc Editing",
-    price: "₹1,000",
+    price: "₹699",
     amount: 1000,
     description:
       "Get both courses at the best value. Master mobile and desktop editing to become a complete video editor.",
@@ -49,7 +49,7 @@ const tiers = [
   {
     id: "premiere_pro",
     name: "Pc Editing",
-    price: "₹800",
+    price: "₹499",
     amount: 800,
     description:
       "Professional desktop editing for creators who want to work with clients and earn freelancing income.",

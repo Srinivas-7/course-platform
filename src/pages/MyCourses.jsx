@@ -13,7 +13,7 @@ function classNames(...classes) {
 const courses = [
   {
     id: "capcut",
-    name: "CapCut Content Editing",
+    name: "Mobile Editing", // ✅ updated
     reviews: { average: 5, totalCount: 310 },
     description:
       "Learn how to create viral Instagram reels and short-form content using CapCut editing techniques.",
@@ -23,25 +23,21 @@ const courses = [
       "Trending transitions",
       "Short-form storytelling",
     ],
-    details:
-      "Perfect for creators who want to edit viral short-form videos quickly using CapCut mobile editing workflows.",
   },
   {
     id: "premiere_pro",
-    name: "Premiere Pro Editing Mastery",
+    name: "Pc Editing", // ✅ updated
     reviews: { average: 5, totalCount: 420 },
     description:
-      "Learn professional video editing using Adobe Premiere Pro. Master cinematic transitions, storytelling, color grading and professional editing workflows.",
+      "Learn professional video editing using Adobe Premiere Pro. Master cinematic transitions, color grading and professional editing workflows.",
     highlights: [
       "Professional Premiere Pro workflow",
       "Cinematic transitions",
       "Color grading techniques",
       "Real client editing projects",
     ],
-    details:
-      "This course teaches everything from beginner editing to advanced cinematic editing techniques used by professional editors.",
   },
-]
+];
 
 export default function MyCourses() {
   const { user } = useAuth();

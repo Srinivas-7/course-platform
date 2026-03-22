@@ -25,9 +25,6 @@ export default function Register() {
         password
       });
 
-      console.log("Signup data:", data);
-      console.log("Signup error:", error);
-
       if (error) {
         alert(error.message);
         setLoading(false);
@@ -37,22 +34,17 @@ export default function Register() {
       const user = data.user;
 
       if (user) {
-        const { error: profileError } = await supabase.from("profiles").upsert({
+        await supabase.from("profiles").upsert({
           id: user.id,
           email: user.email,
           role: "user"
         }, { onConflict: "id" });
-
-        if (profileError) {
-          console.error("Profile insert error:", profileError);
-        }
       }
 
       alert("Account created successfully!");
       navigate("/dashboard");
 
     } catch (err) {
-      console.error("Unexpected error:", err);
       alert("Something went wrong.");
     } finally {
       setLoading(false);
@@ -63,11 +55,11 @@ export default function Register() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://granita-acf12d.netlify.app/dashboard", // ✅ Netlify URL
+        redirectTo: `${import.meta.env.VITE_REDIRECT_URL}/auth/callback`,
       },
     });
 
-    if (error) console.log(error.message);
+    if (error) alert(error.message);
   };
 
   return (
@@ -82,7 +74,6 @@ export default function Register() {
         Create your account
       </h2>
 
-      {/* ✅ Dark card */}
       <div className="w-full max-w-md bg-gray-800 border border-gray-700 rounded-2xl p-8 shadow-xl">
 
         <form
@@ -135,14 +126,12 @@ export default function Register() {
           </p>
         </form>
 
-        {/* Divider */}
         <div className="mt-8 flex items-center gap-4 text-gray-500 text-sm">
           <div className="flex-1 h-px bg-gray-700"></div>
           Or sign up with
           <div className="flex-1 h-px bg-gray-700"></div>
         </div>
 
-        {/* ✅ Google button - dark theme */}
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleGoogleLogin}

@@ -55,7 +55,7 @@ export default function Login() {
     setResetLoading(true);
 
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: "http://localhost:5173/reset-password",
+      redirectTo: `${import.meta.env.VITE_REDIRECT_URL}/reset-password`,
     });
 
     setResetLoading(false);
@@ -71,11 +71,11 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:5173/auth/callback", // ✅ updated
+        redirectTo: `${import.meta.env.VITE_REDIRECT_URL}/auth/callback`,
       },
     });
 
-    if (error) console.log(error.message);
+    if (error) alert(error.message);
   };
 
   return (
