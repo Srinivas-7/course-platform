@@ -9,6 +9,8 @@ export default function Profile() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
+    const [enrolledCount, setEnrolledCount] = useState(0);
+
     useEffect(() => {
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
@@ -16,6 +18,16 @@ export default function Profile() {
                 navigate("/login");
             } else {
                 setUser(session.user);
+
+                // ✅ Fetch real enrolled count
+                const { data } = await supabase
+                    .from("purchases")
+                    .select("course_id")
+                    .eq("user_id", session.user.id);
+
+                // Count unique courses
+                const unique = new Set(data?.map(p => p.course_id)).size;
+                setEnrolledCount(unique);
             }
         };
         checkUser();
@@ -88,7 +100,7 @@ export default function Profile() {
                             <div className="grid grid-cols-2 gap-4 mb-6">
                                 <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 text-center">
                                     <p className="text-gray-400 text-sm mb-1">Courses Enrolled</p>
-                                    <p className="text-white text-2xl font-semibold">0</p>
+                                    <p className="text-white text-2xl font-semibold">{enrolledCount}</p>
                                 </div>
                                 <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 text-center">
                                     <p className="text-gray-400 text-sm mb-1">Member Since</p>

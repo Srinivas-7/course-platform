@@ -31,7 +31,7 @@ export default function ManageUsers() {
       <div className="bg-gray-900 min-h-screen">
         <Navbar />
 
-        <div className="relative isolate px-6 pt-36 pb-20 lg:px-8">
+        <div className="relative isolate px-6 pt-46 pb-20 lg:px-8">
 
           <div aria-hidden="true" className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
             <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36rem] -translate-x-1/2 rotate-30 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72rem]" />
@@ -70,11 +70,10 @@ export default function ManageUsers() {
                         </p>
                       </div>
                     </div>
-                    <span className={`text-xs px-3 py-1 rounded-full ${
-                      user.role === "admin"
+                    <span className={`text-xs px-3 py-1 rounded-full ${user.role === "admin"
                         ? "bg-red-900 text-red-300"
                         : "bg-purple-900 text-purple-300"
-                    }`}>
+                      }`}>
                       {user.role || "student"}
                     </span>
                   </div>
@@ -90,8 +89,8 @@ export default function ManageUsers() {
 
         </div>
 
-        <Footer />
       </div>
+      <Footer />
     </motion.div>
   );
 }

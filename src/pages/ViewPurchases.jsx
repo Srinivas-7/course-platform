@@ -34,7 +34,7 @@ export default function ViewPurchases() {
       <div className="bg-gray-900 min-h-screen">
         <Navbar />
 
-        <div className="relative isolate px-6 pt-36 pb-20 lg:px-8">
+        <div className="relative isolate px-6 pt-46 pb-20 lg:px-8">
 
           <div aria-hidden="true" className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
             <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36rem] -translate-x-1/2 rotate-30 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72rem]" />
@@ -91,8 +91,8 @@ export default function ViewPurchases() {
 
         </div>
 
-        <Footer />
       </div>
+        <Footer />
     </motion.div>
   );
 }

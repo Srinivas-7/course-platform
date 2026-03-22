@@ -20,6 +20,7 @@ const ManageCourses = lazy(() => import("./pages/ManageCourses"));
 const ManageUsers = lazy(() => import("./pages/ManageUsers"));
 const ViewPurchases = lazy(() => import("./pages/ViewPurchases"));
 const AdminUploadLesson = lazy(() => import("./pages/AdminUploadLesson"));
+const LessonPlayer = lazy(() => import("./pages/LessonPlayer"));
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -31,6 +32,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<PublicRoute><HeroPage /></PublicRoute>} />
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+        <Route path="/learn/:courseId" element={<ProtectedRoute><LessonPlayer /></ProtectedRoute>} />
 
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/reset-password" element={<ResetPassword />} />

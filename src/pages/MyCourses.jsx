@@ -47,25 +47,41 @@ export default function MyCourses() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [purchases, setPurchases] = useState([]);
+  const [progress, setProgress] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPurchases = async () => {
+    const fetchData = async () => {
       if (!user) return;
 
-      const { data, error } = await supabase
+      // Fetch purchases
+      const { data: purchaseData, error } = await supabase
         .from("purchases")
         .select("course_id")
         .eq("user_id", user.id);
 
-      if (!error && data) {
-        setPurchases(data.map(p => p.course_id));
+      if (!error && purchaseData) {
+        setPurchases(purchaseData.map(p => p.course_id));
       }
+
+      // Fetch progress for each course
+      const { data: progressData } = await supabase
+        .from("progress")
+        .select("course_id, lesson_id")
+        .eq("user_id", user.id);
+
+      // Count completed lessons per course
+      const progressMap = {};
+      progressData?.forEach(p => {
+        if (!progressMap[p.course_id]) progressMap[p.course_id] = 0;
+        progressMap[p.course_id]++;
+      });
+      setProgress(progressMap);
 
       setLoading(false);
     };
 
-    fetchPurchases();
+    fetchData();
   }, [user]);
 
   const purchasedCourses = courses.filter(course =>
@@ -87,7 +103,6 @@ export default function MyCourses() {
 
         {purchasedCourses.length === 0 ? (
 
-          // ✅ No purchases — show empty state
           <div className="flex flex-col items-center justify-center h-full py-32 text-center px-6">
             <div className="text-6xl mb-6">🎬</div>
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -106,7 +121,6 @@ export default function MyCourses() {
 
         ) : (
 
-          // ✅ Show only purchased courses
           <div className="space-y-28">
             {purchasedCourses.map((course, index) => (
               <div key={index} className="mx-auto max-w-7xl px-6">
@@ -141,8 +155,28 @@ export default function MyCourses() {
                       {course.description}
                     </p>
 
-                    <button className="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-lg font-semibold transition cursor-pointer">
-                      Continue Course
+                    {/* Progress bar */}
+                    {progress[course.id] > 0 && (
+                      <div className="mb-6">
+                        <div className="flex justify-between text-sm text-gray-400 mb-1">
+                          <span>Progress</span>
+                          <span>{progress[course.id]} lessons completed</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div
+                            className="bg-purple-500 h-2 rounded-full transition-all duration-500"
+                            style={{ width: `${Math.min((progress[course.id] / 10) * 100, 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ✅ Continue Course button navigates to lesson player */}
+                    <button
+                      onClick={() => navigate(`/learn/${course.id}`)}
+                      className="bg-purple-600 hover:bg-purple-500 px-8 py-3 rounded-lg font-semibold transition cursor-pointer"
+                    >
+                      {progress[course.id] > 0 ? "Continue Course" : "Start Course"}
                     </button>
 
                     <div className="mt-10">
