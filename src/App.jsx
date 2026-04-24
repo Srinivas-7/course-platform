@@ -4,6 +4,7 @@ import { Suspense, lazy } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import AdminRoute from "./components/AdminRoute";
+import { Toaster } from "react-hot-toast";
 
 const AuthCallback = lazy(() => import("./pages/AuthCallback"));
 const HeroPage = lazy(() => import("./pages/HeroPage"));
@@ -27,6 +28,7 @@ function AnimatedRoutes() {
 
   return (
     <AnimatePresence mode="wait">
+      <Toaster position="top-right" />
       <Routes location={location} key={location.pathname}>
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/" element={<PublicRoute><HeroPage /></PublicRoute>} />
@@ -37,6 +39,7 @@ function AnimatedRoutes() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/about" element={<About />} />
+        
 
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/mycourses" element={<ProtectedRoute><MyCourses /></ProtectedRoute>} />

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
+import Plyr from "plyr";
+import "plyr/dist/plyr.css";
 
 export default function LessonPlayer() {
   const { courseId } = useParams();
@@ -14,6 +16,8 @@ export default function LessonPlayer() {
   const [videoUrl, setVideoUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [completedLessons, setCompletedLessons] = useState([]);
+
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchLessons = async () => {
@@ -98,11 +102,25 @@ export default function LessonPlayer() {
     ? Math.round((completedLessons.length / lessons.length) * 100)
     : 0;
 
-  if (loading) return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">
-      Loading...
-    </div>
-  );
+  // 🔥 Plyr initialization (only addition)
+  useEffect(() => {
+    if (videoRef.current && videoUrl) {
+      const player = new Plyr(videoRef.current, {
+        controls: [
+          "play",
+          "progress",
+          "current-time",
+          "mute",
+          "volume",
+          "fullscreen"
+        ],
+      });
+
+      return () => {
+        player.destroy();
+      };
+    }
+  }, [videoUrl]);
 
   return (
     <motion.div
@@ -126,7 +144,6 @@ export default function LessonPlayer() {
                 ← Back to My Courses
               </button>
 
-              {/* ✅ Only this line changed */}
               <h2 className="text-white font-bold text-lg leading-tight">
                 {courseId === "capcut" ? "Mobile Editing" : "Pc Editing"}
               </h2>
@@ -193,17 +210,19 @@ export default function LessonPlayer() {
 
             <div className="bg-black w-full" style={{ aspectRatio: "16/9" }}>
               {videoUrl ? (
-                <video
-                  key={videoUrl}
-                  src={videoUrl}
-                  controls
-                  autoPlay
-                  className="w-full h-full"
-                  onEnded={() => {
-                    if (currentLesson) markComplete(currentLesson.id);
-                    playNext();
-                  }}
-                />
+                <div className="w-full h-full">
+                  <video
+                    ref={videoRef}
+                    key={videoUrl}
+                    className="w-full h-full"
+                    onEnded={() => {
+                      if (currentLesson) markComplete(currentLesson.id);
+                      playNext();
+                    }}
+                  >
+                    <source src={videoUrl} type="video/mp4" />
+                  </video>
+                </div>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-400 min-h-64">
                   {currentLesson ? "Loading video..." : "Select a lesson to start"}

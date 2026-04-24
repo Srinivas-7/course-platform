@@ -4,9 +4,36 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { ArrowLeft } from "lucide-react";
+import { useEffect, useRef } from "react";
+import NET from "vanta/dist/vanta.net.min";
+import * as THREE from "three";
 
 export default function Login() {
   const navigate = useNavigate();
+  const vantaRef = useRef(null);
+
+  useEffect(() => {
+    if (!vantaRef.current) return;
+
+    let effect = NET({
+      el: vantaRef.current,
+      THREE: THREE,
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      color: 0xa855f7,
+      backgroundColor: 0x05051a,
+      points: 14,
+      spacing: 14,
+      maxDistance: 12,
+    });
+
+    return () => {
+      if (effect) effect.destroy();
+    };
+  }, []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,28 +69,23 @@ export default function Login() {
       navigate("/admin", { replace: true });
       return;
     }
-
     const redirect = localStorage.getItem("redirectAfterLogin") || "/dashboard";
     localStorage.removeItem("redirectAfterLogin");
     navigate(redirect, { replace: true });
   };
 
   const handleForgotPassword = async () => {
-    const resetEmail = prompt("Enter your email address to reset your password:");
-    if (!resetEmail) return;
-
-    setResetLoading(true);
-
-    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: `${import.meta.env.VITE_REDIRECT_URL}/reset-password`,
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "http://localhost:5173/reset-password",
     });
 
-    setResetLoading(false);
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
 
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
     } else {
-      alert("Password reset email sent! Check your inbox.");
+      toast.success("Reset email sent");
     }
   };
 
@@ -79,18 +101,24 @@ export default function Login() {
   };
 
   return (
-    <motion.div
+    <motion.div ref={vantaRef}
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen bg-gray-900 flex flex-col items-center justify-center px-6"
+      className="min-h-screen w-full flex flex-col items-center justify-center px-6"
     >
-      <h2 className="text-3xl font-bold text-white text-center mb-10">
-        Sign in to your account
+      <button
+        onClick={() => navigate("/")}
+        className="absolute top-6 left-6 bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg transition"
+      >
+        <ArrowLeft size={20} />
+      </button>
+      <h2 className="text-4xl font-semibold p-4 text-white text-center tracking-tight">
+        Welcome back <span className="ml-2">👋</span>
       </h2>
 
-      <div className="w-full max-w-md bg-gray-800 border border-gray-700 rounded-2xl p-8 shadow-xl">
+      <div className="w-full max-w-md bg-white/5 backdrop-blur-md border border-white/200 rounded-2xl p-8 shadow-xl">
         <form
           className="space-y-6"
           onSubmit={(e) => {

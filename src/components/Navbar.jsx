@@ -125,12 +125,12 @@ export default function Navbar() {
                     {isAdmin && (
                       <>
                         <button onClick={() => { setDropdownOpen(false); navigate("/admin"); }}
-                          className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-gray-700 transition flex items-center gap-2">
+                          className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:cursor-pointer hover:bg-gray-700 transition flex items-center gap-2">
                           🏠 Admin Dashboard
                         </button>
                         <div className="h-px bg-gray-700" />
                         <button onClick={() => { setDropdownOpen(false); navigate("/admin/upload"); }}
-                          className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-gray-700 transition flex items-center gap-2">
+                          className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:cursor-pointer hover:bg-gray-700 transition flex items-center gap-2">
                           🎬 Upload Lesson
                         </button>
                         <div className="h-px bg-gray-700" />
@@ -138,7 +138,7 @@ export default function Navbar() {
                     )}
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-gray-700 transition flex items-center gap-2"
+                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:cursor-pointer hover:bg-gray-700 transition flex items-center gap-2"
                     >
                       🚪 Log out
                     </button>
@@ -146,8 +146,12 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link to="/login" className="text-sm font-semibold text-white">
-                Log in →
+              <Link
+                to="/login"
+                className="text-sm font-semibold text-white bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded-lg transition"
+              >
+                Log in 
+                <span>→</span>
               </Link>
             )}
           </div>
