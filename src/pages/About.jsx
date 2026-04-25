@@ -234,19 +234,13 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* Reel 2 — landscape file, rotated to portrait */}
+            {/* Reel 2 — vertical video */}
             <motion.div variants={fadeUp} initial="hidden" whileInView="show"
               viewport={{ once: true }} custom={1}
               style={{ background: "#11111c", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "20px", overflow: "hidden" }}>
-              <div style={{ width: "100%", aspectRatio: "4/3", position: "relative", overflow: "hidden" }}>
+              <div style={{ width: "100%", aspectRatio: "9/16", maxHeight: "520px", position: "relative", overflow: "hidden" }}>
                 <video src="/videos/reel2.mp4" autoPlay muted loop playsInline
-                  style={{
-                    position: "absolute",
-                    top: "50%", left: "50%",
-                    width: "177.78%", height: "auto",
-                    transform: "translate(-50%, -50%) rotate(-90deg)",
-                    transformOrigin: "center center",
-                  }} />
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
               </div>
               <div style={{ padding: "14px 18px" }}>
                 <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#7c3aed", background: "rgba(124,58,237,0.12)", borderRadius: "6px", padding: "3px 8px" }}>Portfolio</span>
