@@ -142,9 +142,18 @@ export default function MyCourses() {
                           <h2 className="text-xl font-bold text-white">{course.title}</h2>
                           <div className="flex items-center gap-1.5 mt-0.5">
                             {[0, 1, 2, 3, 4].map(r => (
-                              <StarIcon key={r} className={`h-3.5 w-3.5 ${course.reviews.average > r ? "text-yellow-400" : "text-slate-700"}`} />
+                              <StarIcon
+                                key={r}
+                                className={`h-3.5 w-3.5 ${(course.reviews?.average || 5) > r
+                                  ? "text-yellow-400"
+                                  : "text-slate-700"
+                                  }`}
+                              />
                             ))}
-                            <span className="text-xs text-slate-500 ml-1">{course.reviews.totalCount} students</span>
+
+                            <span className="text-xs text-slate-500 ml-1">
+                              {course.reviews?.totalCount || 100} students
+                            </span>
                           </div>
                         </div>
                       </div>
