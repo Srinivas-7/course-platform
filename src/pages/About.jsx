@@ -238,7 +238,7 @@ export default function About() {
             <motion.div variants={fadeUp} initial="hidden" whileInView="show"
               viewport={{ once: true }} custom={1}
               style={{ background: "#11111c", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "20px", overflow: "hidden" }}>
-              <div style={{ width: "100%", aspectRatio: "9/16", maxHeight: "520px", position: "relative", overflow: "hidden" }}>
+              <div style={{ width: "100%", aspectRatio: "4/3", position: "relative", overflow: "hidden" }}>
                 <video src="/videos/reel2.mp4" autoPlay muted loop playsInline
                   style={{
                     position: "absolute",
