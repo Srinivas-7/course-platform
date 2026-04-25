@@ -246,22 +246,38 @@ export default function About() {
           </div>
 
           {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={2}
+          {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            custom={2}
             style={{
-              background: "#11111c", border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: "20px", overflow: "hidden",
-              maxWidth: "360px", margin: "0 auto",  /* portrait card centred */
-            }}>
-            {/*
-              The video file has landscape metadata (16:9) but content is portrait.
-              Container → 9:16 portrait.
-              Video → rotated 90deg. Width set to 177.78% (=16/9×100%) so that
-              after the 90deg rotation the video exactly fills the portrait container.
-            */}
-            <div style={{ width: "100%", aspectRatio: "9/16", position: "relative", overflow: "hidden" }}>
+              background: "#11111c",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: "20px",
+              overflow: "hidden",
+
+              width: "100%",        // 🔥 added
+              maxWidth: "520px",    // 🔥 updated (was 360px)
+              margin: "0 auto",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                aspectRatio: "9/16",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
               <video
                 src={`/videos/reel${landscapeVideo.id}.mp4`}
-                autoPlay muted loop playsInline
+                autoPlay
+                muted
+                loop
+                playsInline
                 style={{
                   position: "absolute",
                   width: "177.78%",
@@ -273,13 +289,33 @@ export default function About() {
                 }}
               />
             </div>
+
             <div style={{ padding: "14px 20px" }}>
-              <span style={{
-                fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em",
-                textTransform: "uppercase", color: "#7c3aed",
-                background: "rgba(124,58,237,0.12)", borderRadius: "6px", padding: "3px 8px",
-              }}>{landscapeVideo.tag}</span>
-              <p style={{ marginTop: "8px", fontWeight: 600, fontSize: "15px", color: "#e2e8f0" }}>{landscapeVideo.title}</p>
+              <span
+                style={{
+                  fontSize: "10px",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#7c3aed",
+                  background: "rgba(124,58,237,0.12)",
+                  borderRadius: "6px",
+                  padding: "3px 8px",
+                }}
+              >
+                {landscapeVideo.tag}
+              </span>
+
+              <p
+                style={{
+                  marginTop: "8px",
+                  fontWeight: 600,
+                  fontSize: "15px",
+                  color: "#e2e8f0",
+                }}
+              >
+                {landscapeVideo.title}
+              </p>
             </div>
           </motion.div>
 
