@@ -217,107 +217,58 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Row 1 — Two portrait reels side by side */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
-            {portraitVideos.map((v, i) => (
-              <motion.div key={v.id} variants={fadeUp} initial="hidden" whileInView="show"
-                viewport={{ once: true }} custom={i}
-                style={{
-                  background: "#11111c", border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: "20px", overflow: "hidden",
-                }}>
-                <div style={{ width: "100%", aspectRatio: "9/16", maxHeight: "520px", position: "relative", overflow: "hidden" }}>
-                  <video
-                    src={`/videos/reel${v.id}.mp4`}
-                    autoPlay muted loop playsInline
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                </div>
-                <div style={{ padding: "14px 18px" }}>
-                  <span style={{
-                    fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em",
-                    textTransform: "uppercase", color: "#7c3aed",
-                    background: "rgba(124,58,237,0.12)", borderRadius: "6px", padding: "3px 8px",
-                  }}>{v.tag}</span>
-                  <p style={{ marginTop: "8px", fontWeight: 600, fontSize: "15px", color: "#e2e8f0" }}>{v.title}</p>
-                </div>
-              </motion.div>
-            ))}
+          {/* All 3 reels — uniform 3-column portrait grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px" }}>
+
+            {/* Reel 1 */}
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show"
+              viewport={{ once: true }} custom={0}
+              style={{ background: "#11111c", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "20px", overflow: "hidden" }}>
+              <div style={{ width: "100%", aspectRatio: "9/16", maxHeight: "520px", position: "relative", overflow: "hidden" }}>
+                <video src="/videos/reel1.mp4" autoPlay muted loop playsInline
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              </div>
+              <div style={{ padding: "14px 18px" }}>
+                <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#7c3aed", background: "rgba(124,58,237,0.12)", borderRadius: "6px", padding: "3px 8px" }}>Tutorial</span>
+                <p style={{ marginTop: "8px", fontWeight: 600, fontSize: "15px", color: "#e2e8f0" }}>Reel Editing Breakdown</p>
+              </div>
+            </motion.div>
+
+            {/* Reel 2 — landscape file, rotated to portrait */}
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show"
+              viewport={{ once: true }} custom={1}
+              style={{ background: "#11111c", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "20px", overflow: "hidden" }}>
+              <div style={{ width: "100%", aspectRatio: "9/16", maxHeight: "520px", position: "relative", overflow: "hidden" }}>
+                <video src="/videos/reel2.mp4" autoPlay muted loop playsInline
+                  style={{
+                    position: "absolute",
+                    top: "50%", left: "50%",
+                    width: "177.78%", height: "auto",
+                    transform: "translate(-50%, -50%) rotate(-90deg)",
+                    transformOrigin: "center center",
+                  }} />
+              </div>
+              <div style={{ padding: "14px 18px" }}>
+                <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#7c3aed", background: "rgba(124,58,237,0.12)", borderRadius: "6px", padding: "3px 8px" }}>Portfolio</span>
+                <p style={{ marginTop: "8px", fontWeight: 600, fontSize: "15px", color: "#e2e8f0" }}>Client Project Showcase</p>
+              </div>
+            </motion.div>
+
+            {/* Reel 3 */}
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show"
+              viewport={{ once: true }} custom={2}
+              style={{ background: "#11111c", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "20px", overflow: "hidden" }}>
+              <div style={{ width: "100%", aspectRatio: "9/16", maxHeight: "520px", position: "relative", overflow: "hidden" }}>
+                <video src="/videos/reel3.mp4" autoPlay muted loop playsInline
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              </div>
+              <div style={{ padding: "14px 18px" }}>
+                <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#7c3aed", background: "rgba(124,58,237,0.12)", borderRadius: "6px", padding: "3px 8px" }}>Course</span>
+                <p style={{ marginTop: "8px", fontWeight: 600, fontSize: "15px", color: "#e2e8f0" }}>CapCut Masterclass Clip</p>
+              </div>
+            </motion.div>
+
           </div>
-
-          {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
-          {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
-          {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={2}
-            style={{
-              background: "#11111c",
-              border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: "20px",
-              overflow: "hidden",
-              width: "100%",
-              maxWidth: "520px",
-              margin: "0 auto",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                aspectRatio: "9/16",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <video
-                src={`/videos/reel${landscapeVideo.id}.mp4`}
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  width: "100vh",          // 🔥 fills after rotation
-                  height: "100vw",         // 🔥 fills after rotation
-                  objectFit: "cover",      // 🔥 removes black borders
-                  transform: "translate(-50%, -50%) rotate(-90deg)",
-                }}
-              />
-            </div>
-
-            <div style={{ padding: "14px 20px" }}>
-              <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "#7c3aed",
-                  background: "rgba(124,58,237,0.12)",
-                  borderRadius: "6px",
-                  padding: "3px 8px",
-                }}
-              >
-                {landscapeVideo.tag}
-              </span>
-
-              <p
-                style={{
-                  marginTop: "8px",
-                  fontWeight: 600,
-                  fontSize: "15px",
-                  color: "#e2e8f0",
-                }}
-              >
-                {landscapeVideo.title}
-              </p>
-            </div>
-          </motion.div>
 
         </div>
       </section>
