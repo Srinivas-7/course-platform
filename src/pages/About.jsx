@@ -266,7 +266,7 @@ export default function About() {
                 autoPlay muted loop playsInline
                 style={{
                   position: "absolute",
-                  width: "177.78%",
+                  width: "277.78%",
                   height: "auto",
                   top: "50%",
                   left: "50%",
