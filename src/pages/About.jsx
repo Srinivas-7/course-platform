@@ -247,6 +247,7 @@ export default function About() {
 
           {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
           {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
+          {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -258,9 +259,8 @@ export default function About() {
               border: "1px solid rgba(255,255,255,0.07)",
               borderRadius: "20px",
               overflow: "hidden",
-
-              width: "100%",        // 🔥 added
-              maxWidth: "520px",    // 🔥 updated (was 360px)
+              width: "100%",
+              maxWidth: "520px",
               margin: "0 auto",
             }}
           >
@@ -280,12 +280,12 @@ export default function About() {
                 playsInline
                 style={{
                   position: "absolute",
-                  width: "177.78%",
-                  height: "auto",
                   top: "50%",
                   left: "50%",
+                  width: "100vh",          // 🔥 fills after rotation
+                  height: "100vw",         // 🔥 fills after rotation
+                  objectFit: "cover",      // 🔥 removes black borders
                   transform: "translate(-50%, -50%) rotate(-90deg)",
-                  transformOrigin: "center center",
                 }}
               />
             </div>
