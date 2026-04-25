@@ -69,8 +69,6 @@ const tools = [
   { name: "CapCut", color: "#3498db" },
   { name: "After Effects", color: "#2ecc71" },
   { name: "DaVinci Resolve", color: "#e74c3c" },
-  { name: "Photoshop", color: "#f39c12" },
-  { name: "Audition", color: "#1abc9c" },
 ];
 
 /* ─── Video data ─────────────────────────────────────────────── */
@@ -266,7 +264,7 @@ export default function About() {
                 autoPlay muted loop playsInline
                 style={{
                   position: "absolute",
-                  width: "277.78%",
+                  width: "177.78%",
                   height: "auto",
                   top: "50%",
                   left: "50%",
