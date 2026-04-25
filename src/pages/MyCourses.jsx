@@ -42,43 +42,47 @@ export default function MyCourses() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!user) return;
+      // Fix: always stop loading even if user is null
+      if (!user) {
+        setLoading(false);
+        return;
+      }
 
-      // 1. get purchases
-      const { data: purchaseData, error } = await supabase
-        .from("purchases")
-        .select("course_id")
-        .eq("user_id", user.id);
+      try {
+        // 1. Get purchased course IDs
+        const { data: purchaseData } = await supabase
+          .from("purchases")
+          .select("course_id")
+          .eq("user_id", user.id);
 
-      const courseIds = purchaseData?.map(p => p.course_id) || [];
+        const courseIds = purchaseData?.map(p => p.course_id) || [];
+        setPurchases(courseIds);
 
-      // 2. get courses from DB
-      const { data: courseData } = await supabase
-        .from("courses")
-        .select("*")
-        .in("id", courseIds);
+        // 2. Progress
+        const { data: progressData } = await supabase
+          .from("progress")
+          .select("course_id, lesson_id")
+          .eq("user_id", user.id);
 
-      setCourses(courseData || []);
+        const progressMap = {};
+        progressData?.forEach(p => {
+          if (!progressMap[p.course_id]) progressMap[p.course_id] = 0;
+          progressMap[p.course_id]++;
+        });
 
-      // 🔁 KEEP YOUR EXISTING PROGRESS LOGIC
-      const { data: progressData } = await supabase
-        .from("progress")
-        .select("course_id, lesson_id")
-        .eq("user_id", user.id);
-
-      const progressMap = {};
-      progressData?.forEach(p => {
-        if (!progressMap[p.course_id]) progressMap[p.course_id] = 0;
-        progressMap[p.course_id]++;
-      });
-
-      setProgress(progressMap);
-      setLoading(false);
+        setProgress(progressMap);
+      } catch (err) {
+        console.error("MyCourses fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, [user]);
 
-  const purchasedCourses = courses;
+  // Use local COURSES constant for full details (description, highlights, etc.)
+  // Supabase only used to verify which ones are purchased
+  const purchasedCourses = COURSES.filter(c => purchases.includes(c.id));
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center" style={{ background: BG }}>
@@ -139,7 +143,7 @@ export default function MyCourses() {
                           <BookOpen className="h-5 w-5 text-violet-400" strokeWidth={2} />
                         </div>
                         <div>
-                          <h2 className="text-xl font-bold text-white">{course.title}</h2>
+                          <h2 className="text-xl font-bold text-white">{course.name}</h2>
                           <div className="flex items-center gap-1.5 mt-0.5">
                             {[0, 1, 2, 3, 4].map(r => (
                               <StarIcon
