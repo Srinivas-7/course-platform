@@ -76,7 +76,7 @@ export default function Login() {
 
   const handleForgotPassword = async () => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${import.meta.env.VITE_REDIRECT_URL}/reset-password`,
+      redirectTo: `${(import.meta.env.VITE_REDIRECT_URL || '').replace(/\/$/, '')}/reset-password`,
     });
 
     console.log("DATA:", data);
@@ -93,7 +93,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${import.meta.env.VITE_REDIRECT_URL}/auth/callback`,
+        redirectTo: `${(import.meta.env.VITE_REDIRECT_URL || '').replace(/\/$/, '')}/auth/callback`,
       },
     });
 

@@ -59,7 +59,7 @@ export default function HeroPage() {
         </motion.div>
 
         {/* Trust badges */}
-        <motion.div
+        {/* <motion.div
           initial="hidden" animate="show" variants={fadeUp} custom={4}
           className="mt-16 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-600"
         >
@@ -69,7 +69,7 @@ export default function HeroPage() {
               {badge}
             </span>
           ))}
-        </motion.div>
+        </motion.div> */}
       </main>
 
       <Footer />
