@@ -51,32 +51,32 @@ function Counter({ target, suffix = "" }) {
 
 /* ─── Data ───────────────────────────────────────────────────── */
 const stats = [
-  { icon: Users,  value: "54", suffix: "K+", label: "Instagram Followers",  color: "text-violet-400", glow: "rgba(139,92,246,0.3)",  bg: "rgba(139,92,246,0.08)"  },
-  { icon: Film,   value: "300", suffix: "+", label: "Posts Published",       color: "text-pink-400",   glow: "rgba(236,72,153,0.3)", bg: "rgba(236,72,153,0.08)"  },
-  { icon: Trophy, value: "2",  suffix: "+",  label: "Years of Teaching",     color: "text-amber-400",  glow: "rgba(251,191,36,0.3)", bg: "rgba(251,191,36,0.08)"  },
-  { icon: Heart,  value: "1",  suffix: "M+", label: "Views Generated",       color: "text-rose-400",   glow: "rgba(244,63,94,0.3)",  bg: "rgba(244,63,94,0.08)"   },
+  { icon: Users, value: "54", suffix: "K+", label: "Instagram Followers", color: "text-violet-400", glow: "rgba(139,92,246,0.3)", bg: "rgba(139,92,246,0.08)" },
+  { icon: Film, value: "300", suffix: "+", label: "Posts Published", color: "text-pink-400", glow: "rgba(236,72,153,0.3)", bg: "rgba(236,72,153,0.08)" },
+  { icon: Trophy, value: "2", suffix: "+", label: "Years of Teaching", color: "text-amber-400", glow: "rgba(251,191,36,0.3)", bg: "rgba(251,191,36,0.08)" },
+  { icon: Heart, value: "1", suffix: "M+", label: "Views Generated", color: "text-rose-400", glow: "rgba(244,63,94,0.3)", bg: "rgba(244,63,94,0.08)" },
 ];
 
 const journey = [
-  { year: "2022", title: "Started Creating",       desc: "Began posting short-form video content on Instagram, experimenting with editing styles and storytelling." },
-  { year: "2023", title: "10K Followers",           desc: "Hit the first major milestone with a growing community of creators eager to learn video editing." },
-  { year: "2024", title: "Launched First Course",   desc: "Released a structured Premiere Pro course, helping hundreds of beginners land their first editing clients." },
-  { year: "2025", title: "54K & Scaling",           desc: "Expanded to CapCut, grew to 54K+ followers, and built a full platform for aspiring video editors." },
+  { year: "2022", title: "Started Creating", desc: "Began posting short-form video content on Instagram, experimenting with editing styles and storytelling." },
+  { year: "2023", title: "10K Followers", desc: "Hit the first major milestone with a growing community of creators eager to learn video editing." },
+  { year: "2024", title: "Launched First Course", desc: "Released a structured Premiere Pro course, helping hundreds of beginners land their first editing clients." },
+  { year: "2025", title: "54K & Scaling", desc: "Expanded to CapCut, grew to 54K+ followers, and built a full platform for aspiring video editors." },
 ];
 
 const tools = [
   { name: "Premiere Pro", color: "#9b59b6" },
-  { name: "CapCut",       color: "#3498db" },
+  { name: "CapCut", color: "#3498db" },
   { name: "After Effects", color: "#2ecc71" },
   { name: "DaVinci Resolve", color: "#e74c3c" },
-  { name: "Photoshop",    color: "#f39c12" },
-  { name: "Audition",     color: "#1abc9c" },
+  { name: "Photoshop", color: "#f39c12" },
+  { name: "Audition", color: "#1abc9c" },
 ];
 
 /* ─── Video data ─────────────────────────────────────────────── */
 const portraitVideos = [
-  { id: 1, title: "Reel Editing Breakdown",  tag: "Tutorial" },
-  { id: 3, title: "CapCut Masterclass Clip", tag: "Course"   },
+  { id: 1, title: "Reel Editing Breakdown", tag: "Tutorial" },
+  { id: 3, title: "CapCut Masterclass Clip", tag: "Course" },
 ];
 const landscapeVideo = { id: 2, title: "Client Project Showcase", tag: "Portfolio" };
 
@@ -266,11 +266,11 @@ export default function About() {
                 autoPlay muted loop playsInline
                 style={{
                   position: "absolute",
-                  width: "177.78%",   /* 16/9 × container-width = container-height */
+                  width: "177.78%",
                   height: "auto",
                   top: "50%",
                   left: "50%",
-                  transform: "translate(-50%, -50%) rotate(90deg)",
+                  transform: "translate(-50%, -50%) rotate(-90deg)", // ✅ changed to -90deg
                   transformOrigin: "center center",
                 }}
               />
@@ -378,39 +378,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Testimonial / Quote ────────────────────────────────── */}
-      <section style={{ padding: "0 16px 100px" }}>
-        <div style={{ maxWidth: "700px", margin: "0 auto" }}>
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            style={{
-              background: "linear-gradient(135deg, rgba(124,58,237,0.1), rgba(236,72,153,0.06))",
-              border: "1px solid rgba(139,92,246,0.2)",
-              borderRadius: "24px", padding: "48px 40px", textAlign: "center",
-              position: "relative", overflow: "hidden",
-            }}>
-            <div style={{
-              position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
-              width: "200px", height: "1px",
-              background: "linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent)",
-            }} />
-            <div style={{ display: "flex", justifyContent: "center", gap: "4px", marginBottom: "24px" }}>
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} style={{ width: 16, height: 16, color: "#f59e0b", fill: "#f59e0b" }} />
-              ))}
-            </div>
-            <p style={{
-              fontSize: "clamp(1.1rem, 3vw, 1.4rem)", fontWeight: 600,
-              lineHeight: 1.6, color: "#e2e8f0", fontStyle: "italic",
-            }}>
-              "The courses here completely changed how I approach video editing.
-              I went from zero clients to fully booked in 3 months."
-            </p>
-            <p style={{ marginTop: "24px", fontSize: "13px", color: "#64748b", fontWeight: 600 }}>
-              — Student, Premiere Pro Masterclass
-            </p>
-          </motion.div>
-        </div>
-      </section>
 
       {/* ── CTA ────────────────────────────────────────────────── */}
       <section style={{ padding: "0 16px 120px" }}>
