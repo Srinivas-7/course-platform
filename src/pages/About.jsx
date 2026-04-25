@@ -247,17 +247,32 @@ export default function About() {
             ))}
           </div>
 
-          {/* Row 2 — Landscape reel full width */}
+          {/* Row 2 — reel2 is portrait content, rotate 90deg to fix orientation */}
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={2}
             style={{
               background: "#11111c", border: "1px solid rgba(255,255,255,0.07)",
               borderRadius: "20px", overflow: "hidden",
+              maxWidth: "360px", margin: "0 auto",  /* portrait card centred */
             }}>
-            <div style={{ width: "100%", aspectRatio: "16/9", position: "relative", overflow: "hidden" }}>
+            {/*
+              The video file has landscape metadata (16:9) but content is portrait.
+              Container → 9:16 portrait.
+              Video → rotated 90deg. Width set to 177.78% (=16/9×100%) so that
+              after the 90deg rotation the video exactly fills the portrait container.
+            */}
+            <div style={{ width: "100%", aspectRatio: "9/16", position: "relative", overflow: "hidden" }}>
               <video
                 src={`/videos/reel${landscapeVideo.id}.mp4`}
                 autoPlay muted loop playsInline
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                style={{
+                  position: "absolute",
+                  width: "177.78%",   /* 16/9 × container-width = container-height */
+                  height: "auto",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%) rotate(90deg)",
+                  transformOrigin: "center center",
+                }}
               />
             </div>
             <div style={{ padding: "14px 20px" }}>
