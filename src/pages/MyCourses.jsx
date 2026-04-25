@@ -38,25 +38,47 @@ export default function MyCourses() {
   const [purchases, setPurchases] = useState([]);
   const [progress, setProgress] = useState({});
   const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!user) return;
-      const { data: purchaseData, error } = await supabase.from("purchases").select("course_id").eq("user_id", user.id);
-      if (!error && purchaseData) setPurchases(purchaseData.map(p => p.course_id));
-      const { data: progressData } = await supabase.from("progress").select("course_id, lesson_id").eq("user_id", user.id);
+
+      // 1. get purchases
+      const { data: purchaseData, error } = await supabase
+        .from("purchases")
+        .select("course_id")
+        .eq("user_id", user.id);
+
+      const courseIds = purchaseData?.map(p => p.course_id) || [];
+
+      // 2. get courses from DB
+      const { data: courseData } = await supabase
+        .from("courses")
+        .select("*")
+        .in("id", courseIds);
+
+      setCourses(courseData || []);
+
+      // 🔁 KEEP YOUR EXISTING PROGRESS LOGIC
+      const { data: progressData } = await supabase
+        .from("progress")
+        .select("course_id, lesson_id")
+        .eq("user_id", user.id);
+
       const progressMap = {};
       progressData?.forEach(p => {
         if (!progressMap[p.course_id]) progressMap[p.course_id] = 0;
         progressMap[p.course_id]++;
       });
+
       setProgress(progressMap);
       setLoading(false);
     };
     fetchData();
   }, [user]);
 
-  const purchasedCourses = COURSES.filter(c => purchases.includes(c.id));
+  const purchasedCourses = courses;
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center" style={{ background: BG }}>
@@ -117,9 +139,9 @@ export default function MyCourses() {
                           <BookOpen className="h-5 w-5 text-violet-400" strokeWidth={2} />
                         </div>
                         <div>
-                          <h2 className="text-xl font-bold text-white">{course.name}</h2>
+                          <h2 className="text-xl font-bold text-white">{course.title}</h2>
                           <div className="flex items-center gap-1.5 mt-0.5">
-                            {[0,1,2,3,4].map(r => (
+                            {[0, 1, 2, 3, 4].map(r => (
                               <StarIcon key={r} className={`h-3.5 w-3.5 ${course.reviews.average > r ? "text-yellow-400" : "text-slate-700"}`} />
                             ))}
                             <span className="text-xs text-slate-500 ml-1">{course.reviews.totalCount} students</span>
